@@ -1,0 +1,12 @@
+*.o
+*.exe
+*.swp
+*.log
+*.aux
+*.dat
+*.png
+*.pdf
+*.pyc
+*~
+*.eps
+*.gif

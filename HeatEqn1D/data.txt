@@ -1,0 +1,104 @@
+N: 64, 800 x 1600. Final Linf error: 0.153331, final mass: 1.14969.
+0.153331
+N: 64, 1600 x 6400. Final Linf error: 0.153301, final mass: 1.1475.
+0.153301
+N: 64, 3200 x 25600. Final Linf error: 0.153315, final mass: 1.14857.
+0.153315
+N: 64, 6400 x 102400. Final Linf error: 0.153313, final mass: 1.14803.
+0.153313
+N: 128, 800 x 1600. Final Linf error: 0.132433, final mass: 1.13075.
+0.132433
+N: 128, 1600 x 6400. Final Linf error: 0.132393, final mass: 1.12859.
+0.132393
+N: 128, 3200 x 25600. Final Linf error: 0.132394, final mass: 1.12964.
+0.132394
+N: 128, 6400 x 102400. Final Linf error: 0.132392, final mass: 1.12911.
+0.132392
+N: 256, 800 x 1600. Final Linf error: 0.112723, final mass: 1.11243.
+0.112723
+N: 256, 1600 x 6400. Final Linf error: 0.112669, final mass: 1.11029.
+0.112669
+N: 256, 3200 x 25600. Final Linf error: 0.112662, final mass: 1.11132.
+0.112662
+N: 256, 6400 x 102400. Final Linf error: 0.112659, final mass: 1.11079.
+0.112659
+N: 512, 800 x 1600. Final Linf error: 0.0948983, final mass: 1.09539.
+0.0948983
+N: 512, 1600 x 6400. Final Linf error: 0.094828, final mass: 1.09327.
+0.094828
+N: 512, 3200 x 25600. Final Linf error: 0.0948133, final mass: 1.09427.
+0.0948133
+N: 512, 6400 x 102400. Final Linf error: 0.0948089, final mass: 1.09376.
+0.0948089
+N: 1024, 800 x 1600. Final Linf error: 0.0791827, final mass: 1.08008.
+0.0791827
+N: 1024, 1600 x 6400. Final Linf error: 0.0790909, final mass: 1.07796.
+0.0790909
+N: 1024, 3200 x 25600. Final Linf error: 0.0790693, final mass: 1.07895.
+0.0790693
+N: 1024, 6400 x 102400. Final Linf error: 0.0790635, final mass: 1.07844.
+0.0790635
+N: 2048, 800 x 1600. Final Linf error: 0.0655684, final mass: 1.06666.
+0.0655684
+N: 2048, 1600 x 6400. Final Linf error: 0.065449, final mass: 1.06454.
+0.065449
+N: 2048, 3200 x 25600. Final Linf error: 0.0654199, final mass: 1.06551.
+0.0654199
+N: 2048, 6400 x 102400. Final Linf error: 0.0654124, final mass: 1.065.
+0.0654124
+N: 4096, 800 x 1600. Final Linf error: 0.0539448, final mass: 1.05513.
+0.0539448
+N: 4096, 1600 x 6400. Final Linf error: 0.0537905, final mass: 1.053.
+0.0537905
+N: 4096, 3200 x 25600. Final Linf error: 0.0537524, final mass: 1.05395.
+0.0537524
+N: 4096, 6400 x 102400. Final Linf error: 0.0537427, final mass: 1.05344.
+0.0537427
+N: 8192, 800 x 1600. Final Linf error: 0.0441489, final mass: 1.04537.
+0.0441489
+N: 8192, 1600 x 6400. Final Linf error: 0.0439504, final mass: 1.04322.
+0.0439504
+N: 8192, 3200 x 25600. Final Linf error: 0.0439013, final mass: 1.04415.
+0.0439013
+N: 8192, 6400 x 102400. Final Linf error: 0.0438889, final mass: 1.04365.
+0.0438889
+N: 16384, 800 x 1600. Final Linf error: 0.0359907, final mass: 1.03724.
+0.0359907
+N: 16384, 1600 x 6400. Final Linf error: 0.0357365, final mass: 1.03504.
+0.0357365
+N: 16384, 3200 x 25600. Final Linf error: 0.0356734, final mass: 1.03595.
+0.0356734
+N: 16384, 6400 x 102400. Final Linf error: 0.0356576, final mass: 1.03545.
+0.0356576
+N: 32768, 800 x 1600. Final Linf error: 0.0292706, final mass: 1.03053.
+0.0292706
+N: 32768, 1600 x 6400. Final Linf error: 0.0289459, final mass: 1.02827.
+0.0289459
+N: 32768, 3200 x 25600. Final Linf error: 0.0288654, final mass: 1.02916.
+0.0288654
+N: 32768, 6400 x 102400. Final Linf error: 0.0288452, final mass: 1.02865.
+0.0288452
+N: 65536, 800 x 1600. Final Linf error: 0.0237931, final mass: 1.02505.
+0.0237931
+N: 65536, 1600 x 6400. Final Linf error: 0.0233794, final mass: 1.02272.
+0.0233794
+N: 65536, 3200 x 25600. Final Linf error: 0.023277, final mass: 1.02358.
+0.023277
+N: 65536, 6400 x 102400. Final Linf error: 0.0232513, final mass: 1.02307.
+0.0232513
+N: 131072, 800 x 1600. Final Linf error: 0.0193765, final mass: 1.02064.
+0.0193765
+N: 131072, 1600 x 6400. Final Linf error: 0.0188506, final mass: 1.0182.
+0.0188506
+N: 131072, 3200 x 25600. Final Linf error: 0.0187207, final mass: 1.01902.
+0.0187207
+N: 131072, 6400 x 102400. Final Linf error: 0.018688, final mass: 1.01851.
+0.018688
+N: 262144, 800 x 1600. Final Linf error: 0.0158592, final mass: 1.01712.
+0.0158592
+N: 262144, 1600 x 6400. Final Linf error: 0.0151918, final mass: 1.01455.
+0.0151918
+N: 262144, 3200 x 25600. Final Linf error: 0.0150273, final mass: 1.01533.
+0.0150273
+N: 262144, 6400 x 102400. Final Linf error: 0.0149858, final mass: 1.01482.
+0.0149858

@@ -1,0 +1,155 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\title{Heat Equation Numerics Notes}
+\author{Damon Alexander}
+
+\pdfinfo{%
+  /Title    ()
+  /Author   ()
+  /Creator  ()
+  /Producer ()
+  /Subject  ()
+  /Keywords ()
+}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\normInf}[1]{\left|\left|#1\right|\right|_\infty}
+\newcommand{\normBoundary}[1]{\left|\left|#1\right|\right|_{L^2(\Gamma_2)}}
+
+\newcommand{\normI}[1]{\left|\left|#1\right|\right|_{L^\infty(I)}}
+\newcommand{\normH}[1]{\left|\left|#1\right|\right|_{H^2}}
+\newcommand{\normh}[1]{\left|\left|#1\right|\right|_{H^1}}
+\newcommand{\dx}[2]{\frac{\partial #1}{\partial x_#2}}
+\newcommand{\normL}[2]{\left|\left|#1\right|\right|_{L^{#2}}}
+
+\newcommand{\dn}[1]{\frac{\partial #1}{\partial \eta}}
+\newcommand{\deriv}[1]{\frac{d #1}{dx}}
+\newcommand{\derivv}[1]{\frac{d^2 #1}{dx^2}}
+\newcommand{\der}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\p}{\mathbb{P}}
+\newcommand{\e}{\mathbb{E}}
+\newcommand{\var}{\mathbb{V}ar}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\B}{\mathcal{B}(\mathbb{R})}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\supp}[0]{\mbox{supp}}
+
+\begin{document}
+\maketitle
+
+\section{The problem statement}
+We first consider the equation
+\[v_t = v_{xx} \mbox{ for } x \in [x_{min}, x_{max}]\]
+\[v_x(x_{min},t) = 0, \quad v_x(x_{max},t) = 0,\quad v(x,0) = h(x)\]
+
+\section{Numerics}
+\subsection*{The Heat Equation}
+We implement Crank-Nicolson
+\begin{align*}
+ \frac{v_m^{n+1} - v_m^n}{k} &= \frac{1}{2} \frac{v_{m+1}^{n+1} - 2v_m^{n+1} + v_{m-1}^{n+1}}{h^2} + \frac{1}{2} \frac{v_{m+1}^n- 2v_m^n+ v_{m-1}^n}{h^2}
+ \end{align*}
+This scheme is implicit, unconditionally stable, and second-order accurate.  It is also dissipative (good) if $\mu = k/h^2$ is constant.  Reference: Strikwerda p. 147.  We are discretizing space into a grid $\{x_{min}, x_{min}+h, \dots, x_{max}\}$ with $N$ panels where $h = (x_{max}-x_{min})/N$, and time into a grid $\{0,k, 2k, \dots\}$.  Now we write down how to implement the Neumann conditions.
+
+
+These can be approximated with first order accuracy as
+\[ \der{u}{x}(t_n, x_{min}) = \frac{v_1^n - v_0^n}{h} = 0,\quad \der{u}{x}(t_n, x_{max}) = \frac{v_{N-1}^n - v_{N}^n}{h} = 0 \]
+Second order accuracy requires the formulas
+\[ \der{u}{x}(t_n, x_{min}) = \frac{-3v_0^n + 4 v_1^n - v_2^n}{h} = 0,\quad \der{u}{x}(t_n, x_{max}) = \frac{- v_{N -2}^n -4 v_{N-1}^n +3 v_{N}^n}{h} = 0 \]
+We can also use the ghost point formulation
+\[ v_{-1}^n = v_1^n, \quad v_{N+1} = v_{N-1}\]
+Then at the endpoints we get the equations
+\[v_0^{n+1} - \frac{k}{2h^2} (2v_1^{n+1} - 2 v_0^{n+1}) = v_0^n + \frac{k}{2h^2}(2 v_1^n - 2v_0^n)\]
+
+\subsection*{The approximating equation}
+We fix parameters M, N, and p  and consider the equation
+\[u_t = u_{xx} - (u V(x))_x \mbox { for } x \in [x_{min} - p, x_{max} + p]\]
+\[ u(x_{min} - p, t) = 0,\quad u(x_{max} + p,t) = 0, \quad u(x,0) = h'(x),\]
+where
+\begin{align*}
+	V(x) =  \left\{
+	     \begin{array}{lr}
+		0	 & \mbox{ if } x \in [x_{min} - 5, x_{min}-2/M] \cup[x_{min}, x_{max}] \cup [x_{max}+2/M, x_{max} +5]\\
+		N		& \mbox{ if } x = x_{max}+1/M \mbox{ or } x_{min}-1/M \\
+	  MN(x - x_{min}+2/M) & \mbox{ in } [x_{min}-2/M, x_{min}-1/M] \\
+	 -MN(x - x_{min}) & \mbox{ in } [x_{min} - 1/M, -x_{min}] \\
+	 MN(x - x_{max}) & \mbox{ in } [x_{max},x_{max}+1/M] \\
+	 -MN(x- x_{max} - 2/M) & \mbox{ in } [x_{max}+1/M, x_{max}+2/M] .
+			 \end{array}
+		\right.
+\end{align*}
+The messy part is just a linear interpolation from $0$ to $N$ in the specified regions which have width $M$.  Lastly, we have defined $h'$ via
+\[ h'(x) = \left\{
+     \begin{array}{lr}
+		h(x) & \mbox{ if } x \in [x_{min}, x_{max}]\\
+		h(x_{min})	& \mbox{ if } x < x_{min} \\
+		h(x_{max}) & \mbox{ if } x>  x_{max}.
+		 \end{array}
+	\right.
+\]
+
+We will solve this using a modified Crank-Nicolson technique:
+\begin{align*}
+ \frac{u_m^{n+1} - u_m^n}{k} &= \frac{1}{2} \frac{u_{m+1}^{n+1} - 2u_m^{n+1} + u_{m-1}^{n+1}}{h^2} + \frac{1}{2} \frac{u_{m+1}^n- 2u_m^n+ u_{m-1}^n}{h^2} \\
+  &+ -\frac{1}{4h}(u_{m+1}^n - u_{m-1}^n) V_m-\frac{1}{4h}(u_{m+1}^{n+1}- u_{m-1}^{n+1}) V_m. \\
+  &+ -\frac{1}{4h}(V_{m+1} - V_{m-1}) u_m^{n}-\frac{1}{4h}(V_{m+1} - V_{m-1}) u_m^{n+1}
+ \end{align*}
+ Let's rearrange:
+\begin{align*}
+ u_m^{n+1} - \frac{\alpha k}{2h^2}( u_{m+1}^{n+1} - 2u_m^{n+1} + u_{m-1}^{n+1}) +\frac{k}{4h}(u_{m+1}^{n+1}- u_{m-1}^{n+1}) V_m+ \frac{k}{4h}(V_{m+1} - V_{m-1}) u_m^{n}&=\\
+  \frac{\alpha k}{2h^2}(u_{m+1}^n- 2u_m^n+ u_{m-1}^n)  -\frac{k}{4h}(u_{m+1}^n - u_{m-1}^n) V_m -\frac{k}{4h}(V_{m+1} - V_{m-1}) u_m
+ \end{align*}
+ We can write this as follows:
+ \begin{align*}
+ 	\left[I - \frac{k}{2h^2}D_+D_- + \frac{1}{4h}V D_0 + \frac{1}{4h}D_0 V\right] u^{n+1} = \left[I + \frac{k}{2h^2}D_+ D_- - \frac{1}{4h}D_0 V - \frac{1}{4h}V D_0\right] u^{n}
+ \end{align*}
+ Here $D_i$ denotes centered and left/right differences, and $V$ is interpreted as a matrix with $V$ on the diagonal.
+
+Then we can write our system as a tridiagonal matrix problem: 
+\begin{align*}
+\begin{bmatrix}
+   {b_0} & {c_0} & {   } & {   } & { 0 } \\
+   {a_0} & {b_1} & {c_1} & {   } & {   } \\
+   {   } & {a_1} & {b_2} & \ddots & {   } \\
+   {   } & {   } & \ddots & \ddots & {c_{n-1}}\\
+   { 0 } & {   } & {   } & {a_{n-1}} & {b_n}\\
+\end{bmatrix}
+\begin{bmatrix}
+   {u_0^{n+1} }  \\
+   {u_1^{n+1} }  \\
+   {u_2^{n+1} }  \\
+   \vdots   \\
+   {u_n^{n+1} }  \\
+\end{bmatrix}
+=
+A \begin{bmatrix}
+   {u_0^n }  \\
+   {u_1^n }  \\
+   {u_2^n }  \\
+   \vdots   \\
+   {u_n }  \\
+\end{bmatrix}
+\end{align*}
+Then we see that $b_{m}$ corresponds to the $u_{m}^{n+1}$ coefficient, $a_{m-1}$ to $u_{m-1}^{n+1}$, and $c_{m}$ to $u_{m+1}^{n+1}$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

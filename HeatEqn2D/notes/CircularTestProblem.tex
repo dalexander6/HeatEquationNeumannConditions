@@ -1,0 +1,116 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\title{A test problem}
+\author{Damon Alexander}
+
+\pdfinfo{%
+  /Title    ()
+  /Author   ()
+  /Creator  ()
+  /Producer ()
+  /Subject  ()
+  /Keywords ()
+}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\normInf}[1]{\left|\left|#1\right|\right|_\infty}
+\newcommand{\normBoundary}[1]{\left|\left|#1\right|\right|_{L^2(\Gamma_2)}}
+
+\newcommand{\normI}[1]{\left|\left|#1\right|\right|_{L^\infty(I)}}
+\newcommand{\normH}[1]{\left|\left|#1\right|\right|_{H^2}}
+\newcommand{\normh}[1]{\left|\left|#1\right|\right|_{H^1}}
+\newcommand{\dx}[2]{\frac{\partial #1}{\partial x_#2}}
+\newcommand{\normL}[2]{\left|\left|#1\right|\right|_{L^{#2}}}
+
+\newcommand{\dn}[1]{\frac{\partial #1}{\partial \eta}}
+\newcommand{\deriv}[1]{\frac{d #1}{dx}}
+\newcommand{\derivv}[1]{\frac{d^2 #1}{dx^2}}
+\newcommand{\der}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\p}{\mathbb{P}}
+\newcommand{\e}{\mathbb{E}}
+\newcommand{\var}{\mathbb{V}ar}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\B}{\mathcal{B}(\mathbb{R})}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\supp}[0]{\mbox{supp}}
+
+\begin{document}
+\maketitle
+
+We generate a toy problem to test our solver against.  We try to solve in polar
+\begin{align*}
+	u_t &= \Delta u \mbox{ for } r < 1\\
+	u_r(1,\theta,t) &= 0 \\ 
+	u(r, \theta, 0) &= f(r, \theta) \mbox{ for } r < 1.
+\end{align*}
+For now we will assume that $f$ actually has radial symmetry.  Our first step is to make the ansatz $u(r, \theta,t) = R(r) T(t) \Theta(\theta)$.  This transforms our equation into 
+\begin{align*}
+	T' R \Theta =  R'' T \Theta + \frac{1}{r} R' \Theta T + \frac{1}{r^2} \Theta'' R T.
+\end{align*}
+Now we divide through by $R \Theta T$ to obtain
+\begin{align*}
+	\frac{T'}{T} = \frac{R''}{R} + \frac{R'}{r R} + \frac{ \Theta''}{r^2 \Theta}.
+\end{align*}
+Then since the LHS only depends on $t$ and the RHS only depends on $r$ and $\theta$, they must both be constant, which we call $- \lambda^2$ (there are reasons to expect it should be negative).  Thus
+\begin{align*}
+	T(t) = C e^{- \lambda^2 t}.
+\end{align*}
+For an as-yet unclear reason we make the ansatz
+\begin{align*}
+	\Theta'' / \Theta = -n^2.
+\end{align*}
+which has solutions $a_n \cos(n \theta) + b_n \sin(n\theta)$.  Then we find that after multiplying by $r^2 R$,
+\begin{align*}
+  r^2 R'' + r R' + \left( \lambda^2 r^2 - n^2\right) R = 0	.
+\end{align*}
+After changing variables $r \to x /\lambda$, we find that
+\begin{align*}
+  x^2 R'' + x R' + \left( x^2 - n^2\right) R = 0	.
+\end{align*}
+Thus $R(x)$ is a Bessel function of the first kind (since we want it to be finite at the origin), that is,
+\begin{align*}
+	R(r) = J_n(r \lambda).
+\end{align*}
+We now have two degrees of freedom: picking $n$ and $\lambda$.  In order to satisfy $R'(1) = 0$ we require that $\lambda = \lambda^n_m$ where $\{\lambda^n_m\}$ are the roots of $J_n'$.  Thus our final solution is
+\begin{align*}
+	u(r, \theta, t) = \sum_{m, n \ge 0} c_{m,n} [a_n \cos (n \theta) + b_n \sin(n \theta)] J_n( \lambda^n_m r) e^{-(\lambda^n_m )^2 t}.
+\end{align*}
+TODO: Figure out how this actually works.  It seems like we have more constants than should be necessary but maybe not?
+
+\subsection*{A special case}
+Okay, so let's just suppose
+\begin{align*}
+	f(r, \theta) = \cos(\theta) J_0(\lambda^0_0 r).
+\end{align*}
+Then our solution will be
+\begin{align*}
+	u(r, \theta, t) = \cos( \theta) J_0(\lambda^0_0 r) e^{-(\lambda^0_0)^2 t}.
+\end{align*}
+
+\subsection{A better special case} % (fold)
+\label{sub:A better special case}
+It turns out that $\cos(\theta)$ is discontinuous at the origin.  Since $J_0$ is non-zero at the origin, this is annoying.  From looking at pictures of Bessel functions, it looks like $J_3$ would be a better fit: according to wikipedia, for small arguments
+ \begin{align*}
+ 	J_\alpha \approx z^\alpha.
+ \end{align*}
+Thus taking $J_3$ should make things more differentiable.  This gives
+\begin{align*}
+	u(r, \theta, t) = \cos(3 \theta) J_3(\lambda^3_0 r) e^{-(\lambda^3_0)^2 t}.
+\end{align*}
+
+% subsection A better special case (end)
+
+
+
+
+
+
+
+\end{document}

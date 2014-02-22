@@ -1,0 +1,9 @@
+Run 1, V grows linearly, N = 10, 100 x 800.  final L1 error: .073
+Run 2, V grows linearly, N = 100, 100 x 800. final L1 error: .032
+Run 3, V grows linearly, N = 1000, 100 x 800. final L1 error: .009
+Run 4, V grows linearly, N = 2000, 100 x 800.  
+Run 5, V grows cubically, N = 100, 100 x 800.  final L1 error: .07
+Run 6, V grows cubically, N = 10, 100 x 800.  final L1 error: .095
+Run 7, V grows quadratically, N = 10, 100 x 800.  final L1 error: .095
+Run 8, V grows quadratically, N = 10, 100 x 800.  final L1 error: .095
+Run 9, V grows quadratically, N = 10, 100 x 800.  final L1 error: .095

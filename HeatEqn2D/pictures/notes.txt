@@ -1,0 +1,5 @@
+BesselFuncWithPsi3, BesselFuncWithPsi4:
+
+These show what happens with potential
+N*(d^3 + C * d^p * cos^2(theta))
+where C = .1 and p is the 3 or 4 above.
