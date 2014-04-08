@@ -17,6 +17,7 @@ using namespace std;
 #include "../common_files/PaddedGridParameters.h"
 #include "toolboxFunctions.h"
 
+//Note that V IS THE DERIVATIVE HERE.  So 2 is the power we use in the paper
 int vExponent = 2;
 /** Initializes the penalty term
  * @param M is the width
@@ -51,9 +52,9 @@ void initializeV(GridFun1D& V, double N, GridParameters& unpaddedGrid){
 int main(int argc, char *argv[]){
 
 	bool output = false; //set whether we output .dat files
-	output = true;
+	//output = true;
 	bool verbosity = false; //do we output stuff at lots of times
-	verbosity = true;
+	//verbosity = true;
     long    xPanel = 300; //spacial resolution
     long	tPanel = 2000; //temporal resolution
 	
